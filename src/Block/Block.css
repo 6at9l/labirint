@@ -1,0 +1,19 @@
+div .block {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  padding: 0px; }
+
+div .wall {
+  background: #5A5; }
+
+div .track {
+  background: #EEE; }
+
+div .star {
+  background: #F00;
+  border-radius: 50%; }
+
+div .start {
+  background: #F00; }
