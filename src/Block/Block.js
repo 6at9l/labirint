@@ -10,11 +10,13 @@ class Block extends React.Component {
     top: this.props.x * 20,
     left: this.props.y * 20
   }
-  render = () => (
-    <div className={"block " + this.props.cl} style={this.style}>
-
-    </div>
-  )
+  render = () => {
+    
+    return (
+      <div className={"block " + this.props.cl} style={this.style}>
+      </div>
+    )
+  }
 }
 
 export default Block;
