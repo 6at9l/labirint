@@ -1,0 +1,7 @@
+div .zerg {
+  background-image: url("../img/zerg.png");
+  z-index: 10;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-size: cover; }

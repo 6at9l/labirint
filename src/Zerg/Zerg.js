@@ -1,16 +1,23 @@
 import React from 'react';
-import cssModule from 'react-css-modules';
 import styles from './Zerg.css';
 
 class Zerg extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  style = {
+    top: this.props.x * 20,
+    left: this.props.y * 20
+  }
+  
   static propTypes = {
 
   }
   render = () => (
-    <div>
-      Zerg
+    <div className="zerg">
     </div>
   )
 }
 
-export default cssModule(Zerg, styles);
+export default Zerg;
