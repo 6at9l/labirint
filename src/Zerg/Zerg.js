@@ -6,10 +6,6 @@ class Zerg extends React.Component {
     super(props);
     let self = this;
     this.state = { render : false }
-    console.log(this.props);
-    setInterval(function(){
-      //console.log(self.props);
-    }, 1000);
   }
 
   style = {
@@ -28,12 +24,6 @@ class Zerg extends React.Component {
 
   reRender(){
     this.setState({render: !this.setState.render});
-  }
-
-
-
-  static propTypes = {
-
   }
   render = () => {
     return (
