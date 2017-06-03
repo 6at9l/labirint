@@ -12,13 +12,12 @@ class Labirint extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      map : new CreateMatrix(31, 31),
+      map : new CreateMatrix(21, 21),
       render : false,
       restart: true
     }
     let self = this;
     this.zerg = new ZergModel(this.state.map);
-    console.warn(1);
   }
 
   reRender(){
@@ -26,7 +25,6 @@ class Labirint extends React.Component {
   }
 
   visualizationMap(){
-    console.warn(2);
     if(this.restart){ 
       this.restart = false;
       this.bloks = [];
