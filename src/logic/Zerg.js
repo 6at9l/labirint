@@ -7,7 +7,6 @@ class CreateMatrix {
 
     constructor(lab, render){
         this.labirint = lab;
-        let self = this; 
     }
 
     checkFinish(){
@@ -50,8 +49,9 @@ class CreateMatrix {
                     commandSucssesful = true;
                 }
                 break;
+            default:
+
         }
-        console.log(this.directionArr[this.directionIndex], this.labirint.matrix[x][y]);
         return commandSucssesful;
     }
 
@@ -77,6 +77,7 @@ class CreateMatrix {
                 return 270;
             case "left":
                 return 90
+            default:
         }
     }
 }

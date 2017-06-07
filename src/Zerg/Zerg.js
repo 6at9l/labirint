@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './Zerg.css';
+import './Zerg.css';
 
 class Zerg extends React.Component {
   constructor(props){
     super(props);
-    let self = this;
+    // let self = this;
     this.state = { render : false }
   }
 
-  style = {
-    top: this.props.x * 20,
-    left: this.props.y * 20
-  }
+  // style = {
+  //   top: this.props.x * 20,
+  //   left: this.props.y * 20
+  // }
 
   componentWillReceiveProps(props){
     this.props = props;
@@ -27,7 +27,7 @@ class Zerg extends React.Component {
   }
   render = () => {
     return (
-    <div id="zerg" className={"zerg" + " " + this.props.cl}>
+    <div id="zerg" className="zerg">
     </div>
   )}
 }

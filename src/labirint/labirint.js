@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './labirint.css';
+import './labirint.css';
 import CreateMatrix from '../logic/CreateMatrix';
 import ZergModel from '../logic/Zerg';
 import Block from '../Block';
@@ -22,8 +22,10 @@ class Labirint extends React.Component {
     }
     let control = this;
     this.zerg = new ZergModel(this.state.map, this.reRender.bind(this));
+   
     setTimeout(() => {
-      eval("console.log(control.changeDirection(1), control.move()); ");
+      document.getElementById("zerg").style.left = this.zerg.pos[1] * 20 + "px";
+      document.getElementById("zerg").style.top = this.zerg.pos[0] * 20 + "px";
     }, 1000);
   }
 
@@ -37,7 +39,7 @@ class Labirint extends React.Component {
   
   changeDirection(d){
     let arr = this.zerg.setDirection(d);
-    let linkItem = document.getElementById("zerg").style.transform = "rotate(" + arr[2] + "deg)";
+    document.getElementById("zerg").style.transform = "rotate(" + arr[2] + "deg)";
     return arr[0];
   }
   move(){
@@ -65,7 +67,6 @@ class Labirint extends React.Component {
                         el === "*" ? "star" : "start";
           if (classVar === "start"){
             this.zerg.pos = [i, j];
-            console.log(this.zerg);
           }
           this.bloks.push(<Block key={'id' + i + "-" + j} x={i} y={j} cl={classVar}/>);
         }
@@ -76,13 +77,11 @@ class Labirint extends React.Component {
 
   render = function() {
     return (
-      <div className="map" start={this.style}>
+      <div className="map">
         {this.visualizationMap()}
         <Zerg />
       </div>
     )
   }
 }
-// cl={this.zerg.directionArr[this.zerg.directionIndex]}
-// x={this.zerg.pos[0]} y={this.zerg.pos[1]}
 export default Labirint;
