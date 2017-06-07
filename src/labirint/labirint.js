@@ -12,15 +12,17 @@ class Labirint extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      map : new CreateMatrix(21, 21),
+      map : new CreateMatrix(31, 31),
       render : false,
       restart: true
     }
     let self = this;
-    this.zerg = new ZergModel(this.state.map);
+    this.zerg = new ZergModel(this.state.map, this.reRender.bind(this));
     setTimeout(() => {
+      self.zerg.setDirection(0);
+      self.zerg.setDirection(-1);
+      console.log("end");
       self.zerg.move();
-      self.reRender();
       console.log(self.zerg);
     }, 1000);
   }
@@ -50,11 +52,11 @@ class Labirint extends React.Component {
     return this.bloks; 
   }
 
-  render = () => {
+  render = function() {
     return (
       <div className="map" start={this.style}>
         {this.visualizationMap()}
-        <Zerg x={this.zerg.pos[0]} y={this.zerg.pos[1]} cl={this.zerg.direction}/>
+        <Zerg x={this.zerg.pos[0]} y={this.zerg.pos[1]} cl={this.zerg.directionArr[this.zerg.directionIndex]}/>
       </div>
     )
   }
