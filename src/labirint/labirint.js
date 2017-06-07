@@ -12,7 +12,7 @@ class Labirint extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      map : new CreateMatrix(31, 31),
+      map : new CreateMatrix(21, 21),
       render : false,
       restart: true
     }
