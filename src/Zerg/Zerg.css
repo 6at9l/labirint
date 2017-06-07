@@ -5,3 +5,11 @@ div .zerg {
   width: 20px;
   height: 20px;
   background-size: cover; }
+  div .zerg .down {
+    transform: rotate(0deg); }
+  div .zerg .up {
+    transform: rotate(180deg); }
+  div .zerg .right {
+    transform: rotate(270deg); }
+  div .zerg .left {
+    transform: rotate(90deg); }
