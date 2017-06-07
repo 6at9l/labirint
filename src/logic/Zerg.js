@@ -57,10 +57,27 @@ class CreateMatrix {
 
     setDirection(d){
         d = d > 0 ? 1 : -1;
+        let oldDir = this.dirToDeg(this.directionArr[this.directionIndex]);
+
         this.directionIndex += d;   
         this.directionIndex = this.directionIndex < 0 ? this.directionArr.length - 1 : this.directionIndex;
         this.directionIndex = this.directionIndex >= this.directionArr.length ? 0 : this.directionIndex;
-        return this.directionArr[this.directionIndex];
+
+        let newDir = this.dirToDeg(this.directionArr[this.directionIndex]);
+        return [this.directionArr[this.directionIndex], oldDir, newDir];
+    }
+
+    dirToDeg(strDir){
+        switch(strDir){
+            case "down":
+                return 0;
+            case "up":
+                return 180;
+            case "right":
+                return 270;
+            case "left":
+                return 90
+        }
     }
 }
 export default CreateMatrix;

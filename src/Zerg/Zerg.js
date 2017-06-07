@@ -27,7 +27,7 @@ class Zerg extends React.Component {
   }
   render = () => {
     return (
-    <div className={"zerg" + " " + this.props.cl} style={this.style}>
+    <div id="zerg" className={"zerg" + " " + this.props.cl}>
     </div>
   )}
 }

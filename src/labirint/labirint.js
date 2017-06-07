@@ -9,6 +9,10 @@ class Labirint extends React.Component {
   restart = true;
   bloks = [];
   zerg = {};
+  timeAnimateStep = 100;
+
+  test = false;
+
   constructor(props){
     super(props);
     this.state = {
@@ -16,15 +20,33 @@ class Labirint extends React.Component {
       render : false,
       restart: true
     }
-    let self = this;
+    let control = this;
     this.zerg = new ZergModel(this.state.map, this.reRender.bind(this));
     setTimeout(() => {
-      self.zerg.setDirection(0);
-      self.zerg.setDirection(-1);
-      console.log("end");
-      self.zerg.move();
-      console.log(self.zerg);
+      eval("console.log(control.changeDirection(1), control.move()); ");
     }, 1000);
+  }
+
+  wait(){
+    let tEnd = new Date().getTime() + this.timeAnimateStep;
+    let tNow = new Date().getTime();
+    while(tEnd > tNow){
+      tNow = new Date().getTime();
+    }
+  }
+  
+  changeDirection(d){
+    let arr = this.zerg.setDirection(d);
+    let linkItem = document.getElementById("zerg").style.transform = "rotate(" + arr[2] + "deg)";
+    return arr[0];
+  }
+  move(){
+    let flag = this.zerg.move();
+    if (flag){
+      document.getElementById("zerg").style.left = this.zerg.pos[1] * 20 + "px";
+      document.getElementById("zerg").style.top = this.zerg.pos[0] * 20 + "px";
+    }
+    return flag;
   }
 
   reRender(){
@@ -56,10 +78,11 @@ class Labirint extends React.Component {
     return (
       <div className="map" start={this.style}>
         {this.visualizationMap()}
-        <Zerg x={this.zerg.pos[0]} y={this.zerg.pos[1]} cl={this.zerg.directionArr[this.zerg.directionIndex]}/>
+        <Zerg />
       </div>
     )
   }
 }
-
+// cl={this.zerg.directionArr[this.zerg.directionIndex]}
+// x={this.zerg.pos[0]} y={this.zerg.pos[1]}
 export default Labirint;

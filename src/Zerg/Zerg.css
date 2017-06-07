@@ -4,8 +4,7 @@ div .zerg {
   position: absolute;
   width: 20px;
   height: 20px;
-  background-size: cover;
-  transition-duration: 1s; }
+  background-size: cover; }
 
 div .down {
   transform: rotate(0deg); }
