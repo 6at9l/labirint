@@ -4,13 +4,15 @@ import CreateMatrix from '../logic/CreateMatrix';
 import ZergModel from '../logic/Zerg';
 import Block from '../Block';
 import Zerg from '../Zerg';
+import wr from './worker';
+
 
 class Labirint extends React.Component {
   restart = true;
   bloks = [];
   zerg = {};
-  timeAnimateStep = 100;
-
+  timeAnimateStep = 1000;
+  w = {terminate : function(){}};
   test = false;
 
   constructor(props){
@@ -18,37 +20,63 @@ class Labirint extends React.Component {
     this.state = {
       map : new CreateMatrix(31, 31),
       render : false,
-      restart: true
+      restart: true,
+      end: false
     }
     let control = this;
     this.zerg = new ZergModel(this.state.map, this.reRender.bind(this));
-   
     setTimeout(() => {
       document.getElementById("zerg").style.left = this.zerg.pos[1] * 20 + "px";
       document.getElementById("zerg").style.top = this.zerg.pos[0] * 20 + "px";
     }, 1000);
   }
 
-  wait(){
-    let tEnd = new Date().getTime() + this.timeAnimateStep;
-    let tNow = new Date().getTime();
-    while(tEnd > tNow){
-      tNow = new Date().getTime();
+  componentWillReceiveProps(props){
+    if (!props.stop){
+      this.algoritm = props.code;
+      if ( this.algoritm.length > 0) {
+        var script = wr.setDir.toString();
+        script += wr.move.toString();
+        script += wr.check.toString();
+        script += wr.strData;
+
+        var blob = new Blob([script + this.algoritm]);
+        var blobURL = window.URL.createObjectURL(blob);
+        this.w = new Worker(blobURL);
+
+        this.w.onmessage = function(e){
+          if(e.data["action"] === "check"){
+            setTimeout(function(){
+              this.w.postMessage({"result" : this.zerg.checkFinish(), "finish" : true});
+              if (this.zerg.checkFinish()){
+                alert("win");
+              }
+            }.bind(this), 1000);
+          }
+          if (e.data["action"] === "changeDirection"){
+              let arr = this.zerg.setDirection(e.data["d"]);
+              document.getElementById("zerg").style.transform = "rotate(" + arr[2] + "deg)";
+              setTimeout(function(){
+                this.w.postMessage({"result" : true, "finish" : true});
+              }.bind(this), 1000);
+          }
+          if (e.data["action"] === "move"){
+            let flag = this.zerg.move();
+            if (flag){
+              document.getElementById("zerg").style.left = this.zerg.pos[1] * 20 + "px";
+              document.getElementById("zerg").style.top = this.zerg.pos[0] * 20 + "px";
+            }
+            setTimeout(function(){
+
+              this.w.postMessage({"result" : flag, "finish" : true});
+            }.bind(this), 1000);
+          }
+        }.bind(this);
+      }
+    } else {
+      this.w.terminate();
+      //this.w = {terminate : function(){}};
     }
-  }
-  
-  changeDirection(d){
-    let arr = this.zerg.setDirection(d);
-    document.getElementById("zerg").style.transform = "rotate(" + arr[2] + "deg)";
-    return arr[0];
-  }
-  move(){
-    let flag = this.zerg.move();
-    if (flag){
-      document.getElementById("zerg").style.left = this.zerg.pos[1] * 20 + "px";
-      document.getElementById("zerg").style.top = this.zerg.pos[0] * 20 + "px";
-    }
-    return flag;
   }
 
   reRender(){
