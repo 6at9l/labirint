@@ -1,0 +1,212 @@
+<html>
+
+<head>
+
+</head>
+
+
+<body>
+
+<div id = "x"> x = </div>
+
+<div id = "all_lend" style = "position : absolute; top : 250px; left : 200px; background: #eee;">
+	<table border = "0px" width = "300px" height = "500px" cellspacing = "0px">
+		<tbody id = "land_of_game">
+			
+		</tbody>
+	</table>
+</div>	
+
+
+<div id = "car" style = "border: 0px solid #000;
+position : absolute; padding: 0px; top : 550px;left : 200px;">	
+
+	<div class = "car" style = "position : relative; width : 50px; height: 50px; 
+	background : #999; margin : 0px; left : 50px; top : 0px;"></div>	
+	
+	<div class = "car" style = "position : relative; width : 150px; height: 50px; 
+	background : #999; margin : 0px; left : 0px; top : 0px;"></div>	
+
+	<div class = "car" style = "position : relative; width : 50px; height: 50px; 
+	background : #999; margin : 0px; left : 50px; top : 0px;"></div>	
+
+	<div class = "car" style = "position : relative; width : 150px; height: 50px; 
+	background : #999; margin : 0px; left : 0px; top : 0px;"></div>
+	
+</div>	
+
+<div id = "block1" style = "opacity: 1; display: block; background: #888; border: 0px solid #000; width: 150px; height : 50px;
+position : absolute; padding: 0px; top : -40px;left : 200px; z-index: 99;"></div>
+
+<div id = "block2" style = "opacity: 1; display: block; background: #777; border: 0px solid #000; width: 150px; height : 50px;
+position : absolute; padding: 0px; top : 200px;left : 350; z-index: 98;"></div>
+	
+</body>
+
+<script>
+	var land = "";
+	for (var i = 0; i < 10; i++){
+		land = land + "<tr id = \" id_s_" + i + "\">"; 
+		for (var j = 0; j < 6; j++){
+			land = land + "<td align = \"center\" id = \" id_s_" + i + "_t_" + j + "\">" + " " + "</td>";
+		}
+	land = land + "</tr>";
+	}
+	console.log(land)
+	document.getElementById("land_of_game").innerHTML = land;			
+</script>
+
+<script>
+
+function move_car_go(){	
+	var posCar;
+	var objectLand;
+	posCar = document.getElementById("car").getBoundingClientRect();
+	objectLand = document.getElementById("all_lend").getBoundingClientRect();
+	switch (move){
+		case 37:
+			if (!((posCar.left - 50) < objectLand.left)){
+				document.getElementById("car").style.left = posCar.left - 50 + "px";
+			}
+			else{
+				document.getElementById("car").style.left = objectLand.left - 1 + "px";
+			}
+			break;
+
+		case 38:
+			if (!((posCar.top) < objectLand.top)){
+				document.getElementById("car").style.top = posCar.top - 50 + "px"
+			}
+			else{
+				document.getElementById("car").style.top = objectLand.top - 1 + "px";
+			}	
+			break;
+
+		case 39:
+			if (!((posCar.right + 50) > objectLand.right)){
+				document.getElementById("car").style.left = posCar.left + 50 + "px";
+			}
+			else{
+				document.getElementById("car").style.left = objectLand.right - 150 + "px";
+			}		
+			break;
+
+		case 40:
+			if (!((posCar.bottom + 50) > objectLand.bottom)){
+				document.getElementById("car").style.top = posCar.top + 50 + "px"
+			}			
+			else{
+				document.getElementById("car").style.top = objectLand.bottom - 200 + "px";
+			}	
+			break;
+	}	
+}
+
+function restart(){
+	mov = 0;
+	document.getElementById("x").innerHTML = "score" + mov;
+	document.getElementById("car").style.left = "200px";
+	document.getElementById("car").style.top = "550px";
+	document.getElementById("block1").style.top =10;
+	document.getElementById("block2").style.top = 10;	
+}
+
+function moveCar(e){
+	move = e.keyCode;
+	move_car_go();	
+}
+
+function moveCar_stop(){
+	clearInterval(move_car_start);	 
+}
+
+function moveblock1(){
+	mov += 10;
+	document.getElementById("x").innerHTML = "scope = " + mov;
+	var posCar = document.getElementById("car").getBoundingClientRect();
+	var pos_block =	document.getElementById("block1").getBoundingClientRect(); 
+	document.getElementById("block1").style.top = pos_block.top + speed;
+	objectLand = document.getElementById("all_lend").getBoundingClientRect();
+	if ((pos_block.top + 50) > objectLand.bottom){
+		document.getElementById("block1").style.top = 10;
+		speed = Math.random()*10 + 4;
+		if (Math.random() > 0.3){
+			document.getElementById("block1").style.opacity = "1";
+		}
+		else{
+			document.getElementById("block1").style.opacity = "0";
+		}
+	}
+
+	var a = (pos_block.bottom > posCar.top + 50)&&(pos_block.bottom < posCar.bottom);
+	var b = ((pos_block.right - 1) > posCar.left)&&((pos_block.right - 1) < posCar.right);
+	var c = (document.getElementById("block1").style.opacity == "1");
+
+	var d = (pos_block.bottom > posCar.top) && (pos_block.bottom < posCar.bottom);
+	var e = ((pos_block.right - 1) > posCar.left + 50) && ((pos_block.right - 1) < posCar.right + 50);
+
+	if (((a&&b)||(d&&e))&&c){
+		alert("game_over");
+		restart();
+	}
+
+}
+
+function moveblock2(){
+	var posCar = document.getElementById("car").getBoundingClientRect();
+	var pos_block1 = document.getElementById("block1").getBoundingClientRect();
+	var pos_block2 = document.getElementById("block2").getBoundingClientRect(); 
+	var buffer = Math.abs(pos_block1.top - pos_block2.top);
+	
+	if ((buffer) < 320){
+		buffer = 320 - buffer + speed;
+	}	
+	else{
+		buffer = 0;
+	}
+	
+	document.getElementById("block2").style.top = pos_block2.top + speed + buffer;
+	objectLand = document.getElementById("all_lend").getBoundingClientRect();
+
+	if ((pos_block2.top + 50) > objectLand.bottom){
+		document.getElementById("block2").style.top = 10;
+		speed = Math.random()*10 + 4;
+		
+		if (Math.random() > 0.3){
+			document.getElementById("block2").style.opacity = "1";
+		}		
+		else{
+			document.getElementById("block2").style.opacity = "0";
+		}
+	}
+	
+	var a = (pos_block2.bottom > posCar.top + 50) && (pos_block2.bottom < posCar.bottom);
+	var b = ((pos_block2.left + 1) > posCar.left) && ((pos_block2.left + 1) < posCar.right);
+	var c = (document.getElementById("block2").style.opacity == "1");
+
+	var d = (pos_block2.bottom > posCar.top) && (pos_block2.bottom < posCar.bottom);
+	var e = ((pos_block2.left + 1) > posCar.left - 50) && ((pos_block2.left + 1) < posCar.right - 50);	
+
+	if (((a&&b)||(d&&e))&&c){
+		alert("game_over");
+		restart();
+	}	
+}
+
+
+function okey(){
+	setInterval(moveblock2, 40);
+}
+
+var speed = Math.random()*10 + 2;	
+var move;
+var move_car_start;
+var mov = 0;
+document.addEventListener("click", restart, false);
+setInterval(moveblock1, 40);
+setTimeout(okey, 20);
+document.addEventListener("keydown", moveCar, false);
+debugger;
+</script>
+
+</html>
