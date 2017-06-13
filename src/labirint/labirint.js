@@ -6,6 +6,8 @@ import Block from '../Block';
 import Zerg from '../Zerg';
 import wr from './worker';
 
+import wrapper from '../Test/FindEndOfLabirint';
+
 
 class Labirint extends React.Component {
   restart = true;
@@ -34,13 +36,18 @@ class Labirint extends React.Component {
   componentWillReceiveProps(props){
     if (!props.stop){
       this.algoritm = props.code;
-      if ( this.algoritm.length > 0) {
+      if ( this.algoritm.length + 1 > 0) { // for demo code
         var script = wr.setDir.toString();
         script += wr.move.toString();
         script += wr.check.toString();
-        script += wr.strData;
 
-        var blob = new Blob([script + this.algoritm]);
+        script += wr.strData;
+        
+        var demo = "var globalData = " + JSON.stringify(wrapper.globalData) + ";";
+        demo += wrapper.wraperCode.toString();
+
+        // var blob = new Blob([script + this.algoritm]);
+        var blob = new Blob([script + demo + ";wraperCode ();"]);
         var blobURL = window.URL.createObjectURL(blob);
         this.w = new Worker(blobURL);
 

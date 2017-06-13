@@ -29,6 +29,29 @@
      
 //    }
 
+/*
+	код исполняется при нажатии на "Run test", он не отображается в панельке
+	что бы его не копировали
+	в реальном проекте мы сделаем минификацию кода.
+*/
+
+
+// для хранения глобальных данных
+// создавай все переменные в этом объекты 
+var globalData = {
+	"moves" : 'тут значение'
+};
+
+function wraperCode () {
+	var a = "Den";
+	/*
+	Твой код тут 
+	*/
+	console.log("hello world", globalData.moves);
+}
+
+export default {globalData, wraperCode};
+/*
 function log(a){console.log(a);}
 function oneSecPromisse () {
 	// Возврат"обещания"
@@ -46,3 +69,4 @@ function oneSecPromisse () {
 }
 
 oneSecPromisse();
+*/
