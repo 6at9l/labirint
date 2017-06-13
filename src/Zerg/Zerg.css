@@ -6,7 +6,7 @@ div .zerg {
   height: 20px;
   background-size: cover;
   transition-duration: 1s;
-  transition-property: rotate, top, left; }
+  transition-property: tranform, top, left; }
 
 div .down {
   transform: rotate(0deg); }
