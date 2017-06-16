@@ -43,6 +43,8 @@ class Labirint extends React.Component {
 
         script += wr.strData;
         
+        // 
+
         var demo = "var globalData = " + JSON.stringify(wrapper.globalData) + ";";
         demo += wrapper.wraperCode.toString();
 

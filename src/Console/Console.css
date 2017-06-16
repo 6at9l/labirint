@@ -7,13 +7,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: center; }
+  text-align: center;
+  bottom: 20vh; }
   .console div {
     width: 100%; }
     .console div button {
       width: 50%;
       font-size: 18px; }
   .console textarea {
+    display: none;
     padding: 20px;
     width: 40vw;
     margin: 0px;

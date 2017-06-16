@@ -1,33 +1,10 @@
-// let promise = new Promise((resolve, reject) => {
+function setDir (){}
 
-//   setTimeout(() => {
-//     move()
-//     resolve(data.result);
-//   }, 1100);
-// 	});
+function move (){}
 
-// promise
-//   .then(
-//     result => {
-      
-//     },
-//     error => {
-//       // вторая функция - запустится при вызове reject
-//       alert("Rejected: " + error); // error - аргумент reject
-//     }
-//   );
+function check (){}
 
-//   move()  
-//    if (data.result()){
-//      if (data.finish()){
-//        break;
-//      }
-//    } 
-	 
-// 	 else {
-//      setDir(1)
-     
-//    }
+var data;
 
 /*
 	код исполняется при нажатии на "Run test", он не отображается в панельке
@@ -38,35 +15,61 @@
 
 // для хранения глобальных данных
 // создавай все переменные в этом объекты 
+
 var globalData = {
-	"moves" : 'тут значение'
+
 };
 
+
 function wraperCode () {
-	var a = "Den";
-	/*
-	Твой код тут 
-	*/
-	console.log("hello world", globalData.moves);
+
+	function oneSecPromisse () {
+		// Возврат"обещания"
+		return new Promise(function(res, rej) {
+			
+			 setTimeout(function(){
+
+				if (data.result === true) {
+					res();
+				}
+				
+				else {
+					rej();
+				}
+
+			 }, 1100);
+
+		});
+	}
+
+	
+	
+	function positionCheck(){
+		check();		
+		oneSecPromisse().then(finish, findOut1); 
+	}
+	
+	function findOut1(){		
+		setDir(-1);		
+		move();		
+		oneSecPromisse().then(positionCheck, findOut2);
+	
+	}
+
+	function findOut2(){
+		setDir(1);
+		move();
+		oneSecPromisse().then(positionCheck, findOut2) 
+	}
+	
+	
+
+	function finish() {
+		alert("Finish");
+	}
+	
+	positionCheck();
+
 }
 
 export default {globalData, wraperCode};
-/*
-function log(a){console.log(a);}
-function oneSecPromisse () {
-	// Возврат"обещания"
-	return new Promise(function(res, rej) {
-		console.log("тут какой то код"); // .error .warn
-		setTimeout(function(){
-			if (Math.random() > 0.5) {
-				res({f : "okey"});
-			} else {
-				rej({f : "bad"});
-			}
-		}, 1500);
-
-	});
-}
-
-oneSecPromisse();
-*/
